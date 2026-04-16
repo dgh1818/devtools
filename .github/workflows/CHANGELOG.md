@@ -1,0 +1,186 @@
+# Changelog
+
+## [2.3.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.2.1...multi-runner-build-workflow-v2.3.0) (2026-03-24)
+
+
+### Features
+
+* workflow to test use-mise action ([#1438](https://github.com/immich-app/devtools/issues/1438)) ([f2098f3](https://github.com/immich-app/devtools/commit/f2098f34ddd3bdedd81f448b8bf8ca9f315dfd3b))
+
+
+### Chores
+
+* **deps:** update actions/create-github-app-token action to v3 ([#1426](https://github.com/immich-app/devtools/issues/1426)) ([22723b2](https://github.com/immich-app/devtools/commit/22723b2320e7c0e4d15983c3fbd3de0671f91511))
+* **deps:** update actions/download-artifact action to v8 ([#1396](https://github.com/immich-app/devtools/issues/1396)) ([5555e72](https://github.com/immich-app/devtools/commit/5555e729fc97ce305c1b9fd130d56ae4e67c3ec0))
+* **deps:** update docker/build-push-action action to v7 ([#1429](https://github.com/immich-app/devtools/issues/1429)) ([3355b1e](https://github.com/immich-app/devtools/commit/3355b1e34cd6c78eeeef71144195438cbb999de4))
+* **deps:** update docker/login-action action to v4 ([#1430](https://github.com/immich-app/devtools/issues/1430)) ([f96b61f](https://github.com/immich-app/devtools/commit/f96b61f6cd8a73fe3422294b78c22e156e61f469))
+* **deps:** update docker/metadata-action action to v6 ([#1433](https://github.com/immich-app/devtools/issues/1433)) ([32ba7e9](https://github.com/immich-app/devtools/commit/32ba7e9fa094a233da776cd09870bb1d53c4e8f7))
+* **deps:** update docker/setup-buildx-action action to v4 ([#1441](https://github.com/immich-app/devtools/issues/1441)) ([d1661c1](https://github.com/immich-app/devtools/commit/d1661c190db17be6136a02adbf7c0dbbaae0f11e))
+* **deps:** update fluxcd ([#1375](https://github.com/immich-app/devtools/issues/1375)) ([98d2c6b](https://github.com/immich-app/devtools/commit/98d2c6b36f3930316e44f26d812bfd0e5b98923a))
+* **deps:** update fluxcd to v2.8.3 ([#1417](https://github.com/immich-app/devtools/issues/1417)) ([367f836](https://github.com/immich-app/devtools/commit/367f8362fe7f1657c0a5dfec94fa751ba2b63faa))
+* **deps:** update github-actions ([#1347](https://github.com/immich-app/devtools/issues/1347)) ([cf9ba79](https://github.com/immich-app/devtools/commit/cf9ba79f5e112849166f84c8a05c70e05672c770))
+* **deps:** update github-actions ([#1392](https://github.com/immich-app/devtools/issues/1392)) ([9e8a3f9](https://github.com/immich-app/devtools/commit/9e8a3f926a478b3c82b3ef70e2598e6350b76052))
+* **deps:** update github-actions ([#1402](https://github.com/immich-app/devtools/issues/1402)) ([f852dea](https://github.com/immich-app/devtools/commit/f852dea251d00397830d83977184b6551e84589c))
+* **deps:** update github-actions ([#1418](https://github.com/immich-app/devtools/issues/1418)) ([2526860](https://github.com/immich-app/devtools/commit/2526860b563bf04efeae00fb06e5dbb325b723ec))
+* **deps:** update github-actions ([#1444](https://github.com/immich-app/devtools/issues/1444)) ([2a983a1](https://github.com/immich-app/devtools/commit/2a983a141c9e77e04fd302f228fa315ab38ca601))
+* **deps:** update github/codeql-action action to v4.32.3 ([#1356](https://github.com/immich-app/devtools/issues/1356)) ([f00c3a6](https://github.com/immich-app/devtools/commit/f00c3a6b8130ac4d126dc7c3ae712c3f7cd68f20))
+* **deps:** update github/codeql-action action to v4.32.4 ([#1369](https://github.com/immich-app/devtools/issues/1369)) ([f3064a6](https://github.com/immich-app/devtools/commit/f3064a61548064b0542d4ebdbc8f80d9efd3ee1e))
+* **deps:** update image-build-action to 0.1.7 ([#1453](https://github.com/immich-app/devtools/issues/1453)) ([de2ae8b](https://github.com/immich-app/devtools/commit/de2ae8b2c1c3c53264234a7900e59354b13c6f2c))
+* **deps:** update mshick/add-pr-comment action to v3 ([#1436](https://github.com/immich-app/devtools/issues/1436)) ([4d3432f](https://github.com/immich-app/devtools/commit/4d3432fbe3baae41e7d37612c82dce7f6084959b))
+
+## [2.2.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.2.0...multi-runner-build-workflow-v2.2.1) (2026-02-10)
+
+
+### Chores
+
+* **deps:** update github-actions ([#1293](https://github.com/immich-app/devtools/issues/1293)) ([453bdc4](https://github.com/immich-app/devtools/commit/453bdc4808b9afa06235aeaffa96685fade65bf0))
+* **deps:** update github-actions ([#1319](https://github.com/immich-app/devtools/issues/1319)) ([a348b37](https://github.com/immich-app/devtools/commit/a348b371d917ec318947b31a63777e6fd8498f93))
+* **deps:** update github-actions ([#1327](https://github.com/immich-app/devtools/issues/1327)) ([5d0a70e](https://github.com/immich-app/devtools/commit/5d0a70ec9a0ed34661046382967319a5d15df68a))
+* **deps:** update github-actions ([#1335](https://github.com/immich-app/devtools/issues/1335)) ([080d660](https://github.com/immich-app/devtools/commit/080d66045891da410f67d466778f20ff5748836b))
+
+## [2.2.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.1.1...multi-runner-build-workflow-v2.2.0) (2026-01-20)
+
+
+### Features
+
+* use upstream python-on-whales release ([#1258](https://github.com/immich-app/devtools/issues/1258)) ([7b77b18](https://github.com/immich-app/devtools/commit/7b77b182bc390a207a813fbe4d9366af53916f25))
+
+
+### Chores
+
+* **deps:** update actions/setup-node action to v6.2.0 ([#1280](https://github.com/immich-app/devtools/issues/1280)) ([ba7a271](https://github.com/immich-app/devtools/commit/ba7a2712eaa6e89ae65cca40873cfdc91cf6a330))
+* **deps:** update github-actions ([#1265](https://github.com/immich-app/devtools/issues/1265)) ([40ce6bd](https://github.com/immich-app/devtools/commit/40ce6bdb7a54d873ade18457eeaf32e364fe3b07))
+* **deps:** update github/codeql-action action to v4.31.10 ([#1272](https://github.com/immich-app/devtools/issues/1272)) ([bc2cf45](https://github.com/immich-app/devtools/commit/bc2cf451c3362ef0960c1fc563975f1738714d1c))
+
+## [2.1.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.1.0...multi-runner-build-workflow-v2.1.1) (2026-01-09)
+
+
+### Chores
+
+* **deps:** update 1password/install-cli-action action to v2 ([#1175](https://github.com/immich-app/devtools/issues/1175)) ([53723aa](https://github.com/immich-app/devtools/commit/53723aa0bc4cbdd927c5bad5096a40f496f431c7))
+* **deps:** update actions/checkout action to v6 ([#1195](https://github.com/immich-app/devtools/issues/1195)) ([9dee897](https://github.com/immich-app/devtools/commit/9dee89708d4ced9aab55072da591cb7964c97aac))
+* **deps:** update actions/download-artifact action to v7 ([#1236](https://github.com/immich-app/devtools/issues/1236)) ([e776640](https://github.com/immich-app/devtools/commit/e77664050bf2a2d431a5d64a55ed63a389ebc7c6))
+* **deps:** update allenporter/flux-local action to v8 ([#1186](https://github.com/immich-app/devtools/issues/1186)) ([8fcee53](https://github.com/immich-app/devtools/commit/8fcee530cdaa81d90a1e1840f8a97b6a6531e9fe))
+* **deps:** update fluxcd ([#1178](https://github.com/immich-app/devtools/issues/1178)) ([97e044a](https://github.com/immich-app/devtools/commit/97e044a3059038426ec874b5518b6784618dea8b))
+* **deps:** update fluxcd to v8.1.0 ([#1243](https://github.com/immich-app/devtools/issues/1243)) ([a8248b8](https://github.com/immich-app/devtools/commit/a8248b879a46aa668d7f844269fafdae795b5c8a))
+* **deps:** update github-actions ([#1193](https://github.com/immich-app/devtools/issues/1193)) ([844d1bc](https://github.com/immich-app/devtools/commit/844d1bcefd336843acbc7977d84890d91c9a6730))
+* **deps:** update github-actions ([#1208](https://github.com/immich-app/devtools/issues/1208)) ([4d01846](https://github.com/immich-app/devtools/commit/4d01846953d34890f06b13416f91b445155097f1))
+* **deps:** update github-actions ([#1229](https://github.com/immich-app/devtools/issues/1229)) ([79cbc66](https://github.com/immich-app/devtools/commit/79cbc660941ef559e92ef6c1082648997594fe39))
+* **deps:** update github/codeql-action action to v3.31.4 ([#1181](https://github.com/immich-app/devtools/issues/1181)) ([7555018](https://github.com/immich-app/devtools/commit/7555018c1db638dc4c64969e34ddaa6e2a9b07e8))
+* **deps:** update github/codeql-action action to v4 ([#1201](https://github.com/immich-app/devtools/issues/1201)) ([a408aa2](https://github.com/immich-app/devtools/commit/a408aa2c635889ca61707564642577a2a4eb7ad0))
+
+## [2.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.0.1...multi-runner-build-workflow-v2.1.0) (2025-11-20)
+
+
+### Features
+
+* reenable zizmor ([#1119](https://github.com/immich-app/devtools/issues/1119)) ([0f7a618](https://github.com/immich-app/devtools/commit/0f7a6183932db712ba5aad7276e3eb85cbd3c515))
+
+## [2.0.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v2.0.0...multi-runner-build-workflow-v2.0.1) (2025-10-28)
+
+
+### Bug Fixes
+
+* don't initialize with base tags list ([#1117](https://github.com/immich-app/devtools/issues/1117)) ([401f8be](https://github.com/immich-app/devtools/commit/401f8be88425b5bac1680a5957f7fc431fd6f16b))
+
+## [2.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.5...multi-runner-build-workflow-v2.0.0) (2025-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove tag-suffix input ([#1115](https://github.com/immich-app/devtools/issues/1115))
+
+### Bug Fixes
+
+* remove tag-suffix input ([#1115](https://github.com/immich-app/devtools/issues/1115)) ([8c0869f](https://github.com/immich-app/devtools/commit/8c0869f3de41509ebf282ed0e1fce3efbb6b1d6e))
+
+## [1.1.5](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.4...multi-runner-build-workflow-v1.1.5) (2025-10-28)
+
+
+### Bug Fixes
+
+* multi-runner-build artifact suffix incorrectly overriding blank … ([#1113](https://github.com/immich-app/devtools/issues/1113)) ([953d438](https://github.com/immich-app/devtools/commit/953d438649486f337b96268f18e29295cd70d02f))
+
+## [1.1.4](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.3...multi-runner-build-workflow-v1.1.4) (2025-10-28)
+
+
+### Bug Fixes
+
+* multi-runner-build artifact suffixes ([#1106](https://github.com/immich-app/devtools/issues/1106)) ([748c602](https://github.com/immich-app/devtools/commit/748c602fcd29cc9c6c2b9f5d72694581123637e8))
+
+## [1.1.3](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.2...multi-runner-build-workflow-v1.1.3) (2025-10-23)
+
+
+### Bug Fixes
+
+* always include base tags ([#1087](https://github.com/immich-app/devtools/issues/1087)) ([39f8078](https://github.com/immich-app/devtools/commit/39f8078d1776a5023d6f3b86110c561f20f3de54))
+
+## [1.1.2](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.1...multi-runner-build-workflow-v1.1.2) (2025-10-23)
+
+
+### Bug Fixes
+
+* bump python-on-whales version ([#1084](https://github.com/immich-app/devtools/issues/1084)) ([1847f7e](https://github.com/immich-app/devtools/commit/1847f7ef211c58075482ed38d0e42f358db38b52))
+
+## [1.1.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.1.0...multi-runner-build-workflow-v1.1.1) (2025-10-23)
+
+
+### Bug Fixes
+
+* uv run --script ([#1082](https://github.com/immich-app/devtools/issues/1082)) ([96698eb](https://github.com/immich-app/devtools/commit/96698eb2afb1362ce20a8b1c73118cad53edbeed))
+
+## [1.1.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v1.0.0...multi-runner-build-workflow-v1.1.0) (2025-10-23)
+
+
+### Features
+
+* disable zizmor ([#1061](https://github.com/immich-app/devtools/issues/1061)) ([ce1bc80](https://github.com/immich-app/devtools/commit/ce1bc801c8739eb7f5b934f48d458f910bd0b6c0))
+* make GITHUB_APP_TOKEN input optional ([#1079](https://github.com/immich-app/devtools/issues/1079)) ([a01825c](https://github.com/immich-app/devtools/commit/a01825cf0e45e9b6a2bc0749578348f996d65b39))
+* use python for multi-runner-build ([#1080](https://github.com/immich-app/devtools/issues/1080)) ([122a466](https://github.com/immich-app/devtools/commit/122a466ce072cf0924b43957d111f4227ec0b2d2))
+
+
+### Bug Fixes
+
+* concurrency for release-please workflow ([#1060](https://github.com/immich-app/devtools/issues/1060)) ([f5dfbf9](https://github.com/immich-app/devtools/commit/f5dfbf9b78b5dd702b7ab4d795714bc1d12088f6))
+
+## [1.0.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v0.2.1...multi-runner-build-workflow-v1.0.0) (2025-10-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* token input for shared actions ([#1055](https://github.com/immich-app/devtools/issues/1055))
+
+### Features
+
+* token input for shared actions ([#1055](https://github.com/immich-app/devtools/issues/1055)) ([1297869](https://github.com/immich-app/devtools/commit/1297869177d20b39191965dbaa60326337399c73))
+
+
+### Bug Fixes
+
+* missing field value in workflow ([#1058](https://github.com/immich-app/devtools/issues/1058)) ([af4d6a6](https://github.com/immich-app/devtools/commit/af4d6a6e0b3d2f0766d66a25f3d2c43e69ce3b25))
+* pre-job conditions ([#1040](https://github.com/immich-app/devtools/issues/1040)) ([8ddbcff](https://github.com/immich-app/devtools/commit/8ddbcffc561a94841cc2ce0a28a9c25f01fe97cd))
+
+## [0.2.1](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-v0.2.0...multi-runner-build-workflow-v0.2.1) (2025-10-08)
+
+
+### Bug Fixes
+
+* add release-tag-type input ([#1035](https://github.com/immich-app/devtools/issues/1035)) ([44a9c51](https://github.com/immich-app/devtools/commit/44a9c5141750a6f68f957ecccf68c56c377ac13d))
+
+## [0.2.0](https://github.com/immich-app/devtools/compare/multi-runner-build-workflow-0.1.1...multi-runner-build-workflow-v0.2.0) (2025-10-07)
+
+
+### Features
+
+* bootstrap release-please ([#942](https://github.com/immich-app/devtools/issues/942)) ([d0775a0](https://github.com/immich-app/devtools/commit/d0775a0f7265bee71938b48ea91faac13f61c27e))
+* github security hardening ([#834](https://github.com/immich-app/devtools/issues/834)) ([4fd3b4a](https://github.com/immich-app/devtools/commit/4fd3b4a167432e50a19cdeaa55df3bad5891c731))
+* mdq image with jq ([#972](https://github.com/immich-app/devtools/issues/972)) ([3646922](https://github.com/immich-app/devtools/commit/3646922ebe9512dddb9de29e2274676a588a5940))
+* org wide conventional commit and zizmor checks ([#974](https://github.com/immich-app/devtools/issues/974)) ([ac85430](https://github.com/immich-app/devtools/commit/ac854300945828c321ce43bd63c616d00f18a771))
+* tag image builds with major version ([#1024](https://github.com/immich-app/devtools/issues/1024)) ([2f0961b](https://github.com/immich-app/devtools/commit/2f0961babab188fdde832563ad9ebc0baee6b89b))
+* use pre-job ([#981](https://github.com/immich-app/devtools/issues/981)) ([96b982c](https://github.com/immich-app/devtools/commit/96b982c0ea30c5c21656edc99406af6358c81d81))
+
+
+### Bug Fixes
+
+* disable approval checks ([#854](https://github.com/immich-app/devtools/issues/854)) ([effe8f2](https://github.com/immich-app/devtools/commit/effe8f2972bcbb338f1899d44c503b7f7cfef673))
+* rename yaml to yml workflows and zizmor workflow triggers ([#975](https://github.com/immich-app/devtools/issues/975)) ([33c35d9](https://github.com/immich-app/devtools/commit/33c35d9756122ba9f2e1c9690a3c861448fa8415))

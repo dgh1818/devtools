@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: docker.io/outlinewiki/outline
-              tag: 0.85.1@sha256:490b5de174d0f7be9b9d482cf9769b66438d9ce844d12f3c348ba80e36590c0a
+              tag: 1.6.1@sha256:a750f764080ce28d4a7393176011c8e2e4170b41689a8f6d91327dadf4904eb6
             env:
               #ref https://github.com/outline/outline/blob/d3c8224839f09fbff601e4a3e7fd8ff1a6b2ba08/.env.sample
               URL: "https://outline.immich.cloud"
@@ -62,7 +62,7 @@ spec:
           app:
             image:
               repository: valkey/valkey
-              tag: 8.1.3@sha256:facc1d2c3462975c34e10fccb167bfa92b0e0dbd992fc282c29a61c3243afb11
+              tag: 9.0.3@sha256:3b55fbaa0cd93cf0d9d961f405e4dfcc70efe325e2d84da207a0a8e6d8fde4f9
     persistence:
       data:
         enabled: true

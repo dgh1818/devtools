@@ -1,0 +1,30 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: metrics-read-token
+  namespace: monitoring
+spec:
+  secretStoreRef:
+    name: 1p-tf-prod
+    kind: ClusterSecretStore
+  data:
+    - secretKey: token
+      remoteRef:
+        key: METRICS_READ_TOKEN
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: metrics-read
+  namespace: monitoring
+spec:
+  tokenRef:
+    name: metrics-read-token
+    key: token
+  targetRefs:
+    - crd:
+        kind: VMSingle
+        name: vmetrics
+        namespace: monitoring
+      paths: ["/api/v1/query","/api/v1/query_range","/api/v1/series","/api/v1/labels"]
+

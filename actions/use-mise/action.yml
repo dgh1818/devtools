@@ -1,11 +1,16 @@
 name: 'Use Mise'
 description: 'Use Mise with a pinned version'
+inputs:
+  github-token:
+    description: 'Github token to use'
+    required: true
 runs:
   using: 'composite'
   steps:
-    - uses: jdx/mise-action@bfb9fa0b029db830a8c570757cee683df207a6c5 # v2.4.0
+    - uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
       with:
-        version: 2025.7.12
-        sha256: ${{ runner.os == 'Linux' && runner.arch == 'X64' && '78e141b547e4b50dac6b97f9be35e117f6a3e520aa6891aa5ee75c956585d5d2' ||
-                 runner.os == 'Linux' && runner.arch == 'ARM64' && '2e06c7bc32263d7a4ec45edb760922c85e37adba048dc1249d281cbf46e7f703' ||
-                 runner.os == 'macOS' && runner.arch == 'ARM64' && '41eaf6d5a35cc077e205548ecb753ea30d83cdca650c84858c211fb850ef63ef' }}
+        github_token: ${{ inputs.GITHUB_TOKEN }}
+        version: 2026.3.13
+        sha256: ${{ runner.os == 'Linux' && runner.arch == 'X64' && '806790b4a71c93d20e027c40ddf38470fa6e26555275b1181a3c2ccc082ef56f' ||
+                 runner.os == 'Linux' && runner.arch == 'ARM64' && 'c1f56fd3c44a219bbb7064af240b4d3c3e4697b4d88377b8c52576f9a572627e' ||
+                 runner.os == 'macOS' && runner.arch == 'ARM64' && '04d637c1334974b98064f059f86081e55d39be0a338578ce79db4b0ea4bb5e68' }}

@@ -2,7 +2,7 @@
 # https://github.com/onedr0p/containers/blob/main/apps/actions-runner/Dockerfile
 
 # This base image is patched for the local actions-cache
-FROM ghcr.io/falcondev-oss/actions-runner:2.324.0@sha256:4de199ed415f0238e9d4f3844f3e037fc4f03af71a01e267aa080d5aeef6a00f
+FROM ghcr.io/falcondev-oss/actions-runner:2.333.1@sha256:9bf598eae374c92a3b5e12bffcd9b02699daffa0d1e991e560275eda60ea1dd0
 
 ENV HOMEBREW_NO_ANALYTICS=1 \
     HOMEBREW_NO_ENV_HINTS=1 \
@@ -14,8 +14,7 @@ ENV HOMEBREW_NO_ANALYTICS=1 \
 USER root
 
 RUN \
-    add-apt-repository ppa:rmescandon/yq \
-    && apt-get update && apt-get upgrade -y \
+    apt-get update && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         gcc \
@@ -28,10 +27,11 @@ RUN \
         g++ \
         cmake \
         libgl1 \
-        yq \
         xz-utils \
         ninja-build \
         zstd \
+    && wget https://github.com/mikefarah/yq/releases/download/v4.50.1/yq_linux_amd64 -O /usr/local/bin/yq \
+    && chmod +x /usr/local/bin/yq \
     && mkdir -p -m 755 /etc/apt/keyrings \
         && out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
         && cat $out | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
@@ -41,14 +41,14 @@ RUN \
         && apt install gh -y \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -SL https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose \
+RUN curl -SL https://github.com/docker/compose/releases/download/v2.40.2/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose \
     && chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
 
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION v20.10.0
+ENV NODE_VERSION v24.10.0
 
 RUN mkdir -p $NVM_DIR \
-    && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash \
+    && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash \
     && . $NVM_DIR/nvm.sh \
     && nvm install $NODE_VERSION \
     && nvm alias default $NODE_VERSION \

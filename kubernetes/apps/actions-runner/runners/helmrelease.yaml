@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: gha-runner-scale-set
-      version: "0.12.1"
+      version: "0.14.0"
       sourceRef:
         kind: HelmRepository
         name: actions-runner-controller
@@ -59,7 +59,7 @@ spec:
               mountPath: /run/docker
               readOnly: true
         - name: dind
-          image: docker:28.3.2-dind@sha256:be84ce099f7ead42292ebabb539a536df0a4435646c80e50c78a55e0d4f421c5
+          image: docker:29.4.0-dind@sha256:f80c26212befc1c1988b529495532c6b9180d9b1dab1611f4a1efbe9da8ec821
           args:
             - dockerd
             - --host=unix:///run/docker/docker.sock

@@ -1,15 +1,18 @@
 variable "repositories" {
   type = list(object({
-    name               = string
-    description        = string
-    url                = optional(string)
-    discussions        = optional(bool, false)
-    projects           = optional(bool, false)
-    issues             = optional(bool, true)
-    archived           = optional(bool, false)
-    fork               = optional(bool, false)
-    collaborators      = optional(bool, false)
-    require_codeowners = optional(bool, false)
+    name                   = string
+    description            = string
+    url                    = optional(string)
+    discussions            = optional(bool, false)
+    projects               = optional(bool, false)
+    issues                 = optional(bool, true)
+    archived               = optional(bool, false)
+    fork_source            = optional(string)
+    collaborators          = optional(bool, false)
+    require_codeowners     = optional(bool, false)
+    license                = optional(string, "AGPL")
+    collaborator_overrides = optional(map(string), {})
+    visibility             = optional(string, "public")
   }))
   default = [
     {
@@ -63,33 +66,102 @@ variable "repositories" {
     },
     {
       name        = "data.immich.app",
-      description = "Graphs and charts for Immich data"
+      description = "Graphs and charts for Immich data",
       url         = "https://data.immich.app",
     },
     {
       name          = "ui",
       description   = "Svelte components for Immich"
+      license       = "MIT"
       url           = "https://ui.immich.app",
       collaborators = true
     },
     {
-      name        = "sql-tools",
-      description = "A collection of tools and utilities to help manage SQL migrations"
-    },
-    {
       name        = "native_video_player",
       description = "A Flutter widget to play videos on iOS and Android using a native implementation.",
-      fork        = true
+      fork_source = "albemala/native_video_player"
     },
     {
       name        = "justified-layout",
-      description = "A blazingly fast implementation of justified layout, a gallery view popularized by Flickr, written in rust and exported to WASM."
+      license     = "MIT",
+      description = "A blazingly fast implementation of the justified layout gallery view popularized by Flickr, written in Rust and exported to WebAssembly."
     },
     {
       name        = "ml-models",
       description = "Tools for exporting and benchmarking the ML models used by Immich."
+    },
+    {
+      name        = "services",
+      description = "Assortment of services, apis, webhooks, and other misc things."
+    },
+    {
+      name                   = "one-click",
+      description            = "One-Click deployment for Immich on various platforms.",
+      license                = "MIT",
+      collaborator_overrides = { "kennyfuto" : "maintain" }
+    },
+    {
+      name        = "yucca-o11y",
+      description = "o11y stack for yucca",
+      license     = "SOURCE_FIRST"
+    },
+    {
+      name        = "yucca",
+      description = "Everything yucca",
+      license     = "SOURCE_FIRST"
+    },
+    {
+      name        = "restic-wrapper-ts",
+      description = "TypeScript wrapper for the restic backup tool",
+      license     = "MIT"
+    },
+    {
+      name        = "sqlite-libs",
+      description = "SQLite with extensions and query builders"
+    },
+    {
+      name               = "pokedex",
+      description        = "Pokedex is the Immich team's Kubernetes cluster for hardware testing, developer tools, and more"
+      require_codeowners = true
+    },
+    {
+      name          = "walkrs",
+      license       = "MIT",
+      description   = "Fast file tree walker for Node.js, built with ripgrep's ignore crate"
+      collaborators = true
+    },
+    {
+      name        = "packages",
+      license     = "MIT",
+      description = "A collection of libraries around the Immich project"
+    },
+    {
+      name        = "yucca-slop",
+      description = "yucca-slop",
+      visibility  = "private"
+    },
+    {
+      name        = "retro",
+      description = "ISO generator for the Immich Retro Demo DVD",
+      license     = "MIT"
+    },
+    {
+      name        = "drift",
+      description = "Drift is an easy to use, reactive, typesafe persistence library for Dart & Flutter.",
+      fork_source = "simolus3/drift",
+      url         = "https://pub.dev/packages/drift"
     }
   ]
+}
+
+import {
+  id = "retro"
+  to = github_repository.repositories["retro"]
+}
+
+import {
+  id = "drift"
+  to = github_repository.repositories["drift"]
 }
 
 resource "github_repository" "repositories" {
@@ -109,9 +181,14 @@ resource "github_repository" "repositories" {
   has_downloads             = true
   has_projects              = each.value.projects
   has_wiki                  = false
+  visibility                = each.value.visibility
   vulnerability_alerts      = !each.value.archived
   homepage_url              = coalesce(each.value.url, "https://immich.app")
   squash_merge_commit_title = "PR_TITLE"
+
+  fork         = each.value.fork_source != null
+  source_owner = each.value.fork_source != null ? split("/", each.value.fork_source)[0] : null
+  source_repo  = each.value.fork_source != null ? split("/", each.value.fork_source)[1] : null
 
   lifecycle {
     ignore_changes = [
@@ -212,7 +289,7 @@ resource "github_repository_file" "default_files" {
         # Ignore all .terragrunt files in any child directory
         if !can(regex(".*terragrunt.*", file))
       ]
-      if !coalesce(repo.fork, false) && !coalesce(repo.archived, false)
+      if !coalesce(repo.archived, false)
     ]) : "${combination.repo.name}/${combination.file}" => combination
   }
   repository          = each.value.repo.name
@@ -220,6 +297,8 @@ resource "github_repository_file" "default_files" {
   content             = file("${path.module}/repo-files/${each.value.file}")
   commit_message      = "chore: modify ${each.value.file}"
   overwrite_on_create = true
+
+  depends_on = [github_repository.repositories]
 
   lifecycle {
 
@@ -232,17 +311,138 @@ resource "github_repository_file" "default_files" {
   }
 }
 
-import {
-  to = github_repository.repositories["native_video_player"]
-  id = "native_video_player"
+resource "github_repository_file" "init_files" {
+  for_each = {
+    for combination in flatten([
+      for repo in var.repositories : [
+        for file in fileset("${path.module}/repo-init-files", "**") : {
+          repo = repo
+          file = file
+        }
+        # Ignore all .terragrunt files in any child directory
+        if !can(regex(".*terragrunt.*", file))
+      ]
+      if !coalesce(repo.archived, false)
+    ]) : "${combination.repo.name}/${combination.file}" => combination
+  }
+  repository          = each.value.repo.name
+  file                = each.value.file
+  content             = file("${path.module}/repo-init-files/${each.value.file}")
+  commit_message      = "chore: create ${each.value.file}"
+  overwrite_on_create = false
+
+  depends_on = [github_repository.repositories]
+
+  lifecycle {
+    ignore_changes = [
+      commit_message,
+      commit_email,
+      commit_author,
+      overwrite_on_create,
+      content
+    ]
+  }
 }
 
-# import {
-#   to = github_repository_file.default_files["static-pages/${each.value}"]
-#   id = "static-pages/${each.value}"
-#   for_each = {
-#     for file in fileset("${path.module}/repo-files", "**") : file => file
-#     # FIXME find a better solution
-#     if !contains([".terragrunt-source-manifest", ".terragrunt-module-manifest", ".github/.terragrunt-source-manifest", ".github/.terragrunt-module-manifest"], file)
-#   }
-# }
+import {
+  id = "immich:renovate.json:"
+  to = github_repository_file.init_files["immich/renovate.json"]
+}
+
+import {
+  id = "devtools:renovate.json:"
+  to = github_repository_file.init_files["devtools/renovate.json"]
+}
+
+import {
+  id = "base-images:renovate.json:"
+  to = github_repository_file.init_files["base-images/renovate.json"]
+}
+
+import {
+  id = "yucca-o11y:renovate.json:"
+  to = github_repository_file.init_files["yucca-o11y/renovate.json"]
+}
+
+import {
+  id = "packages:renovate.json:"
+  to = github_repository_file.init_files["packages/renovate.json"]
+}
+
+import {
+  id = "geoshenanigans:renovate.json:"
+  to = github_repository_file.init_files["geoshenanigans/renovate.json"]
+}
+
+import {
+  id = "data.immich.app:renovate.json:"
+  to = github_repository_file.init_files["data.immich.app/renovate.json"]
+}
+
+import {
+  id = "static-pages:renovate.json:"
+  to = github_repository_file.init_files["static-pages/renovate.json"]
+}
+
+import {
+  id = "ui:renovate.json:"
+  to = github_repository_file.init_files["ui/renovate.json"]
+}
+
+import {
+  id = "discord-bot:renovate.json:"
+  to = github_repository_file.init_files["discord-bot/renovate.json"]
+}
+
+import {
+  id = "yucca:renovate.json:"
+  to = github_repository_file.init_files["yucca/renovate.json"]
+}
+
+import {
+  id = "ml-models:renovate.json:"
+  to = github_repository_file.init_files["ml-models/renovate.json"]
+}
+
+import {
+  id = "immich-charts:renovate.json:"
+  to = github_repository_file.init_files["immich-charts/renovate.json"]
+}
+
+import {
+  id = "justified-layout:renovate.json:"
+  to = github_repository_file.init_files["justified-layout/renovate.json"]
+}
+
+import {
+  id = "sqlite-libs:renovate.json:"
+  to = github_repository_file.init_files["sqlite-libs/renovate.json"]
+}
+
+import {
+  id = "restic-wrapper-ts:renovate.json:"
+  to = github_repository_file.init_files["restic-wrapper-ts/renovate.json"]
+}
+
+resource "github_repository_file" "license_files" {
+  for_each = {
+    for repo in var.repositories : repo.name => repo
+    if repo.fork_source == null && !coalesce(repo.archived, false)
+  }
+  repository          = each.value.name
+  file                = "LICENSE"
+  content             = file("${path.module}/license-files/${each.value.license}.txt")
+  commit_message      = "chore: modify LICENSE to ${each.value.license}"
+  overwrite_on_create = true
+
+  depends_on = [github_repository.repositories]
+
+  lifecycle {
+    ignore_changes = [
+      commit_message,
+      commit_email,
+      commit_author,
+      overwrite_on_create
+    ]
+  }
+}

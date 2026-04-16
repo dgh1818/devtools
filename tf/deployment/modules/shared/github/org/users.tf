@@ -8,10 +8,10 @@ locals {
 
   collaborators = {
     for user in local.github_users : user.github.username => (
-      user.role == "contributor" ? "maintain" :
-      (user.role == "support" ? "triage" : null)
+      length(setintersection(toset(user.roles), toset(["contributor", "futo"]))) > 0 ? "maintain" :
+      (contains(user.roles, "support") ? "triage" : null)
     )
-    if user.role == "contributor" || user.role == "support"
+    if length(setintersection(toset(user.roles), toset(["contributor", "support", "futo"]))) > 0
   }
 
   bots = {
@@ -41,11 +41,11 @@ resource "github_team_members" "team" {
   dynamic "members" {
     for_each = {
       for user in local.github_users : user.github.username => user
-      if user.role == "team"
+      if contains(user.roles, "team")
     }
     content {
       username = members.value.github.username
-      role     = members.value.role == "admin" ? "maintainer" : "member"
+      role     = contains(members.value.roles, "admin") ? "maintainer" : "member"
     }
   }
 }
@@ -55,11 +55,11 @@ resource "github_team_members" "leadership" {
   dynamic "members" {
     for_each = {
       for user in local.github_users : user.github.username => user
-      if user.role == "admin"
+      if contains(user.roles, "admin")
     }
     content {
       username = members.value.github.username
-      role     = members.value.role == "admin" ? "maintainer" : "member"
+      role     = contains(members.value.roles, "admin") ? "maintainer" : "member"
     }
   }
 }
@@ -67,24 +67,23 @@ resource "github_team_members" "leadership" {
 resource "github_membership" "org_members" {
   for_each = {
     for user in local.github_users : user.github.username => user
-    if user.role == "team" || user.role == "admin"
+    if length(setintersection(toset(user.roles), toset(["team", "yucca", "admin"]))) > 0
   }
 
   username = each.key
-  role     = each.value.role == "admin" ? "admin" : "member"
+  role     = contains(each.value.roles, "admin") ? "admin" : "member"
 }
 
 resource "github_repository_collaborators" "repo_collaborators" {
   for_each = {
     for repo in var.repositories : repo.name => repo
-    if coalesce(repo.collaborators, false)
   }
 
   repository = each.value.name
 
   dynamic "user" {
     // Modified: Only add general collaborators if repo.collaborators is true for the current repo
-    for_each = coalesce(each.value.collaborators, false) ? local.collaborators : {}
+    for_each = merge(coalesce(each.value.collaborators, false) ? local.collaborators : {}, each.value.collaborator_overrides)
     content {
       username   = user.key
       permission = user.value

@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: victoria-metrics-k8s-stack
-      version: 0.56.0
+      version: 0.72.6
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -62,4 +62,6 @@ spec:
       spec:
         extraArgs:
           search.maxUniqueTimeseries: "600000"
-        resources: {}
+        resources:
+          limits:
+            memory: 8Gi

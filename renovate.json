@@ -4,6 +4,8 @@
     "local>immich-app/.github:renovate-config"
   ],
   "automerge": true,
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 5,
   "packageRules": [
     {
       "matchPackageNames": [
@@ -41,6 +43,24 @@
         "/terragrunt/"
       ],
       "groupName": "tofu"
+    },
+    {
+      "groupName": "immich",
+      "minimumReleaseAge": "0",
+      "matchPackageNames": [
+        "immich-app/immich"
+      ]
+    },
+    {
+      "matchPackageNames": [
+        "/zitadel/"
+      ],
+      "groupName": "zitadel"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "groupName": null
     }
   ],
   "flux": {

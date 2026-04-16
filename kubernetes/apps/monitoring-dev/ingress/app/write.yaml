@@ -1,0 +1,31 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: metrics-write-token
+  namespace: monitoring-dev
+spec:
+  secretStoreRef:
+    name: 1p-tf-dev
+    kind: ClusterSecretStore
+  data:
+    - secretKey: token
+      remoteRef:
+        key: METRICS_WRITE_TOKEN
+---
+apiVersion: operator.victoriametrics.com/v1beta1
+kind: VMUser
+metadata:
+  name: metrics-write
+  namespace: monitoring-dev
+  labels:
+    vm-user: "write"
+spec:
+  tokenRef:
+    name: metrics-write-token
+    key: token
+  targetRefs:
+    - crd:
+        kind: VMSingle
+        name: vmetrics-dev
+        namespace: monitoring-dev
+      paths: ["/write"]

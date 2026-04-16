@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: victoria-metrics-operator
-      version: 0.51.0
+      version: 0.59.4
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -17,13 +17,16 @@ spec:
         namespace: flux-system
   maxHistory: 2
   install:
-    crds: CreateReplace
+    crds: Skip
     remediation:
       retries: 3
   upgrade:
-    crds: CreateReplace
+    crds: Skip
     cleanupOnFail: true
     remediation:
       retries: 3
   uninstall:
     keepHistory: false
+  values:
+    crds:
+      enabled: false

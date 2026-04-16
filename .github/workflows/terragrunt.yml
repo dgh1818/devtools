@@ -1,0 +1,179 @@
+name: 'Terragrunt'
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "tf/**"
+      - ".github/workflows/terragrunt.yml"
+      - ".mise/config.toml"
+  push:
+    branches: [ "main" ]
+    paths:
+      - "tf/**"
+      - ".github/workflows/terragrunt.yml"
+      - ".mise/config.toml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  working_dir: 'tf/deployment'
+  TG_NON_INTERACTIVE: 'true'
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install 1Password CLI
+        uses: 1password/install-cli-action@8d006a0d0a4fd505af7f7ce589e7f768385ff5e4 # v3.0.0
+        with:
+          version: 2.30.3
+
+      - name: Setup Mise
+        uses: immich-app/devtools/actions/use-mise@035e80a7d4355d5f087ffb95db9e4a0944c04e56 # use-mise-action-v1.1.3
+
+      - name: Check Formatting
+        run: terragrunt hcl format --check --diff
+
+      - name: Check terraform fmt
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_DEV }}
+          ENVIRONMENT: dev
+        run: mise run tf fmt -- -diff -check
+  plan:
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install 1Password CLI
+        uses: 1password/install-cli-action@8d006a0d0a4fd505af7f7ce589e7f768385ff5e4 # v3.0.0
+        with:
+          version: 2.30.3
+
+      - name: Setup Mise
+        uses: immich-app/devtools/actions/use-mise@035e80a7d4355d5f087ffb95db9e4a0944c04e56 # use-mise-action-v1.1.3
+
+      - name: Plan Shared
+        working-directory: ${{ env.working_dir }}/modules/shared
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
+          ENVIRONMENT: prod
+        run: mise run tf:plan 2>&1 | tee "$RUNNER_TEMP/plan-shared.txt"
+
+      - name: Plan Dev
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_DEV }}
+          ENVIRONMENT: dev
+        run: mise run tf:plan 2>&1 | tee "$RUNNER_TEMP/plan-dev.txt"
+
+      - name: Plan Prod
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
+          ENVIRONMENT: prod
+        run: |
+          mise run tf:init
+          mise run tf:plan 2>&1 | tee "$RUNNER_TEMP/plan-prod.txt"
+
+      - name: Comment PR
+        if: always() && github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo "## Terraform Plan"
+            echo ""
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-shared.txt" "Shared"
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-dev.txt" "Scoped (dev)"
+            bash "$GITHUB_WORKSPACE/.github/scripts/parse-plan.sh" "$RUNNER_TEMP/plan-prod.txt" "Scoped (prod)"
+          } > "$RUNNER_TEMP/plan-comment.md"
+
+          char_count=$(wc -c < "$RUNNER_TEMP/plan-comment.md")
+          if [ "$char_count" -gt 65536 ]; then
+            echo "## Terraform Plan" > "$RUNNER_TEMP/plan-comment.md"
+            echo "" >> "$RUNNER_TEMP/plan-comment.md"
+            echo "Plan output exceeded GitHub's comment character limit (${char_count} / 65536)." >> "$RUNNER_TEMP/plan-comment.md"
+            echo "" >> "$RUNNER_TEMP/plan-comment.md"
+            echo "[View full plan output in the action run](${RUN_URL})" >> "$RUNNER_TEMP/plan-comment.md"
+          fi
+
+          COMMENT_ID=$(gh api "repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments" \
+            --jq '.[] | select(.body | startswith("<!-- tf-plan -->")) | .id' | head -1)
+
+          # Prepend hidden marker for future lookups
+          sed -i '1s/^/<!-- tf-plan -->\n/' "$RUNNER_TEMP/plan-comment.md"
+
+          if [ -n "$COMMENT_ID" ]; then
+            gh api "repos/${{ github.repository }}/issues/comments/$COMMENT_ID" \
+              -X PATCH -F "body=@$RUNNER_TEMP/plan-comment.md"
+          else
+            gh pr comment "${{ github.event.pull_request.number }}" --body-file "$RUNNER_TEMP/plan-comment.md"
+          fi
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install 1Password CLI
+        uses: 1password/install-cli-action@8d006a0d0a4fd505af7f7ce589e7f768385ff5e4 # v3.0.0
+        with:
+          version: 2.30.3
+
+      - name: Setup Mise
+        uses: immich-app/devtools/actions/use-mise@035e80a7d4355d5f087ffb95db9e4a0944c04e56 # use-mise-action-v1.1.3
+
+      - name: Deploy Shared
+        working-directory: ${{ env.working_dir }}/modules/shared
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
+          ENVIRONMENT: prod
+        run: mise run tf:apply
+
+      - name: Deploy Dev
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_DEV }}
+          ENVIRONMENT: dev
+        run: mise run tf:apply
+
+      - name: Deploy Prod
+        working-directory: ${{ env.working_dir }}/modules/scoped
+        env:
+          OP_CONNECT_HOST: ${{ secrets.OP_CONNECT_HOST }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN_PROD }}
+          ENVIRONMENT: prod
+        run: |
+          mise run tf:init
+          mise run tf:apply

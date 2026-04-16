@@ -64,7 +64,13 @@ resource "github_organization_ruleset" "org_required_checks" {
   rules {
     required_status_checks {
       required_check {
-        context = "Check for Team/Admin Review / check-approval"
+        context = "Validate PR Title (conventional commit) / validate-pr-title"
+      }
+      required_check {
+        context = "Zizmor / zizmor"
+      }
+      required_check {
+        context = "Approval Check"
       }
     }
   }

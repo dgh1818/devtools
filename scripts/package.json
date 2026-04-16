@@ -2,8 +2,9 @@
   "name": "@immich/scripts",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
-    "album-creator": "tsx src/album-creator.ts",
+    "seed-demo": "tsx src/seed-demo.ts",
     "build": "tsc",
     "format": "prettier --check .",
     "format:fix": "prettier --write .",
@@ -18,21 +19,22 @@
   "description": "",
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.20.0",
-    "@immich/sdk": "^1.126.1",
+    "@eslint/js": "^10.0.0",
+    "@immich/sdk": "^2.0.0",
     "@types/luxon": "^3.4.2",
-    "@types/node": "^22.16.4",
+    "@types/node": "^24.12.2",
     "@typescript-eslint/eslint-plugin": "^8.24.0",
     "@typescript-eslint/parser": "^8.24.0",
-    "eslint": "^9.20.1",
+    "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.3",
-    "eslint-plugin-unicorn": "^56.0.1",
+    "eslint-plugin-unicorn": "^63.0.0",
     "luxon": "^3.5.0",
     "prettier": "^3.5.0",
     "prettier-plugin-organize-imports": "^4.1.0",
     "tsx": "^4.19.4",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.24.0"
+    "typescript": "^6.0.0",
+    "typescript-eslint": "^8.24.0",
+    "globals": "^17.1.0"
   }
 }

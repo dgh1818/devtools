@@ -4,6 +4,9 @@ locals {
     "hidden_admin",
     "head_down",
     "team",
+    "immich",
+    "yucca",
+    "futo",
     "contributor",
     "in_the_zone",
     "security_researcher",
@@ -53,6 +56,8 @@ data "discord_permission" "support_crew" {
   manage_messages  = "allow"
   move_members     = "allow"
   manage_threads   = "allow"
+  pin_messages     = "allow"
+  bypass_slowmode  = "allow"
 }
 
 resource "discord_role" "support_crew" {
@@ -110,8 +115,27 @@ resource "discord_role" "contributor" {
   hoist       = true
 }
 
-data "discord_color" "team" {
-  hex = "#1E83F7"
+data "discord_color" "immich" {
+  hex = "#4250AF"
+}
+
+resource "discord_role" "immich" {
+  server_id   = discord_server.server.id
+  name        = "Immich"
+  permissions = data.discord_permission.team.allow_bits
+  color       = data.discord_color.immich.dec
+}
+
+data "discord_color" "futo" {
+  hex = "#254466"
+}
+
+resource "discord_role" "futo" {
+  server_id   = discord_server.server.id
+  name        = "FUTO"
+  permissions = data.discord_permission.contributor.allow_bits
+  color       = data.discord_color.futo.dec
+  hoist       = true
 }
 
 data "discord_permission" "team" {
@@ -156,6 +180,24 @@ data "discord_permission" "team" {
   request_to_speak          = "allow"
   create_events             = "allow"
   manage_events             = "allow"
+  view_audit_log            = "allow"
+  pin_messages              = "allow"
+  bypass_slowmode           = "allow"
+}
+
+data "discord_color" "yucca" {
+  hex = "#C27E79"
+}
+
+resource "discord_role" "yucca" {
+  server_id   = discord_server.server.id
+  name        = "Yucca"
+  permissions = data.discord_permission.team.allow_bits
+  color       = data.discord_color.yucca.dec
+}
+
+data "discord_color" "team" {
+  hex = "#1E83F7"
 }
 
 resource "discord_role" "team" {
@@ -196,7 +238,6 @@ data "discord_permission" "fake_admin" {
   view_channel    = "allow"
   manage_channels = "allow"
   manage_roles    = "allow"
-  view_audit_log  = "allow"
   manage_webhooks = "allow"
   connect         = "allow"
 }

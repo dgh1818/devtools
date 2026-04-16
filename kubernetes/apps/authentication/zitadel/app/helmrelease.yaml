@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: zitadel
-      version: 8.13.4
+      version: 9.28.0
       sourceRef:
         kind: HelmRepository
         name: zitadel
@@ -18,7 +18,11 @@ spec:
   values:
     image:
       repository: ghcr.io/zitadel/zitadel
-      tag: v3.3.2@sha256:27ac010816bf07d7d3c08ac61d470edfdf771f58aa0836909d0383aaca8fd72b
+      tag: v4.13.0@sha256:fbbe11f3ec190d7147e5e3d650f5d9aaeba822b1e6dcb63d9b946166c32b7c83
+    setupJob:
+      machinekeyWriter:
+        image:
+          tag: 1.32.3
     zitadel:
       configmapConfig:
         FirstInstance:
@@ -33,6 +37,8 @@ spec:
         TLS:
           Enabled: false # TLS is terminated at the ingress
       masterkeySecretName: zitadel-master-key
+    login:
+      enabled: false
     env:
       - name: ZITADEL_DATABASE_POSTGRES_HOST
         valueFrom:

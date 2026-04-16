@@ -7,15 +7,6 @@ resource "cloudflare_record" "immich_app_cname_demo" {
   zone_id = cloudflare_zone.immich_app.id
 }
 
-resource "cloudflare_record" "immich_app_aaaa_docs" {
-  name    = "docs"
-  proxied = true
-  ttl     = 1
-  type    = "AAAA"
-  content = "100::"
-  zone_id = cloudflare_zone.immich_app.id
-}
-
 resource "cloudflare_record" "immich_app_aaaa_documentation" {
   name    = "documentation"
   proxied = true
@@ -76,15 +67,6 @@ resource "cloudflare_record" "immich_app_cname__domainconnect" {
   ttl     = 1
   type    = "CNAME"
   content = "connect.domains.google.com"
-  zone_id = cloudflare_zone.immich_app.id
-}
-
-resource "cloudflare_record" "immich_app_cname_api" {
-  name    = "api.immich.app"
-  proxied = false
-  ttl     = 1
-  type    = "CNAME"
-  content = "mich.immich.cloud"
   zone_id = cloudflare_zone.immich_app.id
 }
 
@@ -159,5 +141,14 @@ resource "cloudflare_record" "immich_app_txt_1password_verification" {
   ttl     = 1
   type    = "TXT"
   content = "1password-site-verification=GPHHHHLRXZHQFKUCAEYLDTI4TM"
+  zone_id = cloudflare_zone.immich_app.id
+}
+
+resource "cloudflare_record" "immich_app_txt_google_site_verification" {
+  name    = "immich.app"
+  proxied = false
+  ttl     = 1
+  type    = "TXT"
+  content = "\"google-site-verification=OSHGLJBzjJP6YwNjRiFhhOlHeR2zb_2hBgZvZOc0K1Q\""
   zone_id = cloudflare_zone.immich_app.id
 }

@@ -4,9 +4,11 @@ provider "github" {
     installation_id = var.github_app_installation_id
     pem_file        = var.github_app_pem_file
   }
-  owner = var.github_owner
+  owner             = var.github_owner
+  parallel_requests = true
 }
 
 provider "onepassword" {
-  service_account_token = var.op_service_account_token
+  url   = var.op_connect_url
+  token = var.op_connect_token
 }

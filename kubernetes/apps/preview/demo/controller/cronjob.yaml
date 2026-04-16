@@ -12,7 +12,7 @@ spec:
           serviceAccountName: demo-controller
           containers:
             - name: demo-controller
-              image: ghcr.io/fluxcd/flux-cli:v2.6.4@sha256:d6734ea180b0f5135e6a343482da1a669c526ef85525da53a6415c6a9f359861
+              image: ghcr.io/fluxcd/flux-cli:v2.8.3@sha256:1fe5c39881c0c1f857f0462f0692e365bea768228b33d31c209610f389775eb6
               imagePullPolicy: IfNotPresent
               command:
                 - /bin/sh
@@ -25,7 +25,7 @@ spec:
 
                   kubectl scale --replicas=0 --namespace=preview deployment/demo-server
 
-                  kubectl rollout restart --namespace=preview statefulset/demo-redis-master
+                  kubectl rollout restart --namespace=preview deployment/demo-valkey
                   kubectl delete cluster demo-database --wait=true --cascade=foreground --namespace=preview
                   flux reconcile kustomization demo-deployment --namespace=flux-system
 

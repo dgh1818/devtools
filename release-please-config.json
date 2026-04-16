@@ -1,0 +1,38 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "simple",
+  "separate-pull-requests": true,
+  "always-update": true,
+  "packages": {
+    "actions/image-build": {
+      "component": "image-build-action"
+    },
+    "actions/success-check": {
+      "component": "success-check-action"
+    },
+    "actions/use-mise": {
+      "component": "use-mise-action"
+    },
+    "actions/pre-job": {
+      "component": "pre-job-action"
+    },
+    "actions/create-workflow-token": {
+      "component": "create-workflow-token-action"
+    },
+    "services/outline-role-sync": {
+      "component": "outline-role-sync"
+    },
+    ".github/workflows": {
+      "component": "multi-runner-build-workflow",
+      "exclude-paths": [
+        ".github/workflows/release-please.yml",
+        ".github/workflows/zizmor.yaml"
+      ]
+    }
+  },
+  "changelog-sections": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "chore", "section": "Chores" }
+  ]
+}

@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: victoria-metrics-k8s-stack
-      version: 0.56.0
+      version: 0.72.6
       interval: 15m
       sourceRef:
         kind: HelmRepository
@@ -47,11 +47,19 @@ spec:
     vmsingle:
       spec:
         extraArgs:
-          search.maxUniqueTimeseries: "600000"
-        resources: {}
+          search.logSlowQueryDuration: "3s"
+        resources:
+          requests:
+            cpu: 2000m
+            memory: 32Gi
+          limits:
+            memory: 32Gi
     vmagent:
       spec:
         resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
           limits:
             cpu: 2000m
             memory: 1Gi

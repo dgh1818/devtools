@@ -87,38 +87,6 @@ import {
   id = "PUSH_O_MATIC_APP_KEY"
 }
 
-data "onepassword_item" "npm_read_token" {
-  title = "npm-read-token"
-  vault = data.onepassword_vault.github.name
-}
-
-resource "github_actions_organization_secret" "npm_read_token" {
-  secret_name     = "NPM_READ_TOKEN"
-  plaintext_value = data.onepassword_item.npm_read_token.credential
-  visibility      = "all"
-}
-
-import {
-  to = github_actions_organization_secret.npm_read_token
-  id = "NPM_READ_TOKEN"
-}
-
-data "onepassword_item" "npm_write_token" {
-  title = "npm-write-token"
-  vault = data.onepassword_vault.github.name
-}
-
-resource "github_actions_organization_secret" "npm_write_token" {
-  secret_name     = "NPM_TOKEN"
-  plaintext_value = data.onepassword_item.npm_write_token.credential
-  visibility      = "all"
-}
-
-import {
-  to = github_actions_organization_secret.npm_write_token
-  id = "NPM_TOKEN"
-}
-
 resource "github_actions_organization_secret" "docker_hub_read_token" {
   secret_name     = "DOCKER_HUB_READ_TOKEN"
   plaintext_value = data.terraform_remote_state.docker_org_state.outputs.read_token
@@ -150,4 +118,315 @@ resource "github_actions_organization_secret" "CF_TURNSTILE_DEFAULT_INVISIBLE_SI
 import {
   to = github_actions_organization_secret.CF_TURNSTILE_DEFAULT_INVISIBLE_SITE_KEY
   id = "CF_TURNSTILE_DEFAULT_INVISIBLE_SITE_KEY"
+}
+
+data "onepassword_item" "digitalocean_api_token" {
+  title = "DIGITALOCEAN_API_TOKEN"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "DIGTALOCEAN_API_TOKEN" {
+  secret_name     = "DIGITALOCEAN_API_TOKEN"
+  plaintext_value = data.onepassword_item.digitalocean_api_token.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "weblate_api_key" {
+  title = "WEBLATE_API_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "WEBLATE_TOKEN" {
+  secret_name     = "WEBLATE_TOKEN"
+  plaintext_value = data.onepassword_item.weblate_api_key.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "vultr_api_token" {
+  title = "VULTR_API_TOKEN"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "VULTR_API_TOKEN" {
+  secret_name     = "VULTR_API_TOKEN"
+  plaintext_value = data.onepassword_item.vultr_api_token.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "google_play_signing_key_jks" {
+  title = "GOOGLE_PLAY_SIGNING_KEY_JKS"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_JKS" {
+  secret_name     = "GOOGLE_PLAY_SIGNING_KEY_JKS"
+  plaintext_value = data.onepassword_item.google_play_signing_key_jks.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "google_play_signing_key_alias" {
+  title = "GOOGLE_PLAY_SIGNING_KEY_ALIAS"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_ALIAS" {
+  secret_name     = "GOOGLE_PLAY_SIGNING_KEY_ALIAS"
+  plaintext_value = data.onepassword_item.google_play_signing_key_alias.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "google_play_signing_key_password" {
+  title = "GOOGLE_PLAY_SIGNING_KEY_PASSWORD"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_PASSWORD" {
+  secret_name     = "GOOGLE_PLAY_SIGNING_KEY_PASSWORD"
+  plaintext_value = data.onepassword_item.google_play_signing_key_password.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "google_play_signing_key_store_password" {
+  title = "GOOGLE_PLAY_SIGNING_KEY_STORE_PASSWORD"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "GOOGLE_PLAY_SIGNING_KEY_STORE_PASSWORD" {
+  secret_name     = "GOOGLE_PLAY_SIGNING_KEY_STORE_PASSWORD"
+  plaintext_value = data.onepassword_item.google_play_signing_key_store_password.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "APP_STORE_CONNECT_API_KEY_ID" {
+  title = "APP_STORE_CONNECT_API_KEY_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY_ID" {
+  secret_name     = "APP_STORE_CONNECT_API_KEY_ID"
+  plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY_ID.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "APP_STORE_CONNECT_API_KEY_ISSUER_ID" {
+  title = "APP_STORE_CONNECT_API_KEY_ISSUER_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY_ISSUER_ID" {
+  secret_name     = "APP_STORE_CONNECT_API_KEY_ISSUER_ID"
+  plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY_ISSUER_ID.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "APP_STORE_CONNECT_API_KEY" {
+  title = "APP_STORE_CONNECT_API_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "APP_STORE_CONNECT_API_KEY" {
+  secret_name     = "APP_STORE_CONNECT_API_KEY"
+  plaintext_value = data.onepassword_item.APP_STORE_CONNECT_API_KEY.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_CERTIFICATE_P12" {
+  title = "IOS_CERTIFICATE_P12"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_CERTIFICATE_P12" {
+  secret_name     = "IOS_CERTIFICATE_P12"
+  plaintext_value = data.onepassword_item.IOS_CERTIFICATE_P12.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_CERTIFICATE_PASSWORD" {
+  title = "IOS_CERTIFICATE_PASSWORD"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_CERTIFICATE_PASSWORD" {
+  secret_name     = "IOS_CERTIFICATE_PASSWORD"
+  plaintext_value = data.onepassword_item.IOS_CERTIFICATE_PASSWORD.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_PROVISIONING_PROFILE" {
+  title = "IOS_PROVISIONING_PROFILE"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE" {
+  secret_name     = "IOS_PROVISIONING_PROFILE"
+  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "FASTLANE_TEAM_ID" {
+  title = "FASTLANE_TEAM_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "FASTLANE_TEAM_ID" {
+  secret_name     = "FASTLANE_TEAM_ID"
+  plaintext_value = data.onepassword_item.FASTLANE_TEAM_ID.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
+  title = "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
+  secret_name     = "IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION"
+  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE_WIDGET_EXTENSION.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION" {
+  title = "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION" {
+  secret_name     = "IOS_PROVISIONING_PROFILE_SHARE_EXTENSION"
+  plaintext_value = data.onepassword_item.IOS_PROVISIONING_PROFILE_SHARE_EXTENSION.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_DEVELOPMENT_PROVISIONING_PROFILE" {
+  title = "IOS_DEVELOPMENT_PROVISIONING_PROFILE"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROFILE" {
+  secret_name     = "IOS_DEVELOPMENT_PROVISIONING_PROFILE"
+  plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION" {
+  title = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION" {
+  secret_name     = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION"
+  plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE_SHARE_EXTENSION.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
+  title = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION" {
+  secret_name     = "IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION"
+  plaintext_value = data.onepassword_item.IOS_DEVELOPMENT_PROVISIONING_PROFILE_WIDGET_EXTENSION.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "STATIC_BUCKET_NAME" {
+  title = "STATIC_BUCKET_NAME"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_NAME" {
+  secret_name     = "STATIC_BUCKET_NAME"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_NAME.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "STATIC_BUCKET_ENDPOINT" {
+  title = "STATIC_BUCKET_ENDPOINT"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_ENDPOINT" {
+  secret_name     = "STATIC_BUCKET_ENDPOINT"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_ENDPOINT.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "STATIC_BUCKET_KEY_ID" {
+  title = "STATIC_BUCKET_KEY_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_KEY_ID" {
+  secret_name     = "STATIC_BUCKET_KEY_ID"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_KEY_ID.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "STATIC_BUCKET_KEY_SECRET" {
+  title = "STATIC_BUCKET_KEY_SECRET"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_KEY_SECRET" {
+  secret_name     = "STATIC_BUCKET_KEY_SECRET"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_KEY_SECRET.password
+  visibility      = "all"
+}
+
+data "onepassword_item" "STATIC_BUCKET_REGION" {
+  title = "STATIC_BUCKET_REGION"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "STATIC_BUCKET_REGION" {
+  secret_name     = "STATIC_BUCKET_REGION"
+  plaintext_value = data.onepassword_item.STATIC_BUCKET_REGION.password
+  visibility      = "all"
+}
+
+data "github_repository" "geoshenanigans" {
+  full_name = "immich-app/geoshenanigans"
+}
+
+data "onepassword_item" "TIGRIS_WRITE_KEY_ID" {
+  title = "TIGRIS_WRITE_KEY_ID"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "TIGRIS_WRITE_KEY_ID" {
+  secret_name     = "TIGRIS_WRITE_KEY_ID"
+  plaintext_value = data.onepassword_item.TIGRIS_WRITE_KEY_ID.password
+  visibility      = "selected"
+}
+
+resource "github_actions_organization_secret_repositories" "TIGRIS_WRITE_KEY_ID" {
+  secret_name             = github_actions_organization_secret.TIGRIS_WRITE_KEY_ID.secret_name
+  selected_repository_ids = [data.github_repository.geoshenanigans.repo_id]
+}
+
+data "onepassword_item" "TIGRIS_WRITE_ACCESS_KEY" {
+  title = "TIGRIS_WRITE_ACCESS_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "TIGRIS_WRITE_ACCESS_KEY" {
+  secret_name     = "TIGRIS_WRITE_ACCESS_KEY"
+  plaintext_value = data.onepassword_item.TIGRIS_WRITE_ACCESS_KEY.password
+  visibility      = "selected"
+}
+
+resource "github_actions_organization_secret_repositories" "TIGRIS_WRITE_ACCESS_KEY" {
+  secret_name             = github_actions_organization_secret.TIGRIS_WRITE_ACCESS_KEY.secret_name
+  selected_repository_ids = [data.github_repository.geoshenanigans.repo_id]
+}
+
+data "onepassword_item" "OUTLINE_API_KEY" {
+  title = "OUTLINE_API_KEY"
+  vault = data.onepassword_vault.tf.name
+}
+
+resource "github_actions_organization_secret" "OUTLINE_API_KEY" {
+  secret_name     = "OUTLINE_API_KEY"
+  plaintext_value = data.onepassword_item.OUTLINE_API_KEY.password
+  visibility      = "all"
 }
