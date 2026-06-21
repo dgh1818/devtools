@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Check what should run
         id: check
-        uses: immich-app/devtools/actions/pre-job@f50e3b600b6ac1763ddb8f3dfc69093512b967a1 # pre-job-action-v2.0.3
+        uses: immich-app/devtools/actions/pre-job@91f342bb4477c4bc10c576ae739da875d85aa164 # pre-job-action-v2.0.4
         with:
           github-token: ${{ github.token }}
           filters: |
@@ -51,18 +51,25 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
 
       - name: Use Mise
         uses: ./actions/use-mise
         with:
-          github-token: ${{ github.token }}
+          github_token: ${{ github.token }}
+
+      - name: Verify github_token was forwarded to mise-action
+        run: |
+          if [ -z "${MISE_GITHUB_TOKEN:-}" ]; then
+            echo "::error::MISE_GITHUB_TOKEN is unset — use-mise did not forward github_token to jdx/mise-action"
+            exit 1
+          fi
 
       - name: Verify mise version matches pinned version
         run: |
-          expected=$(yq '.runs.steps[0].with.version' actions/use-mise/action.yml)
+          expected=$(yq '(.runs.steps[] | select(.uses | test("^jdx/mise-action"))).with.version' actions/use-mise/action.yml)
           actual=$(mise --version | awk '{print $1}')
           echo "Expected: $expected"
           echo "Actual:   $actual"
@@ -70,3 +77,14 @@ jobs:
             echo "::error::mise version mismatch: expected $expected, got $actual"
             exit 1
           fi
+
+  success-check:
+    name: Test use-mise Success
+    needs: [test-use-mise]
+    permissions: {}
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: immich-app/devtools/actions/success-check@81113db03f6d743efee81e0058c0b43f6cd6f36d # success-check-action-v0.0.6
+        with:
+          needs: ${{ toJSON(needs) }}

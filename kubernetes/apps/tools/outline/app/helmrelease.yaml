@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: docker.io/outlinewiki/outline
-              tag: 1.6.1@sha256:a750f764080ce28d4a7393176011c8e2e4170b41689a8f6d91327dadf4904eb6
+              tag: 1.8.1@sha256:e224dcbe34670bdae8835c32d5abc692d3560dfa262b72fb7232f4d87185aebd
             env:
               #ref https://github.com/outline/outline/blob/d3c8224839f09fbff601e4a3e7fd8ff1a6b2ba08/.env.sample
               URL: "https://outline.immich.cloud"
@@ -41,9 +41,9 @@ spec:
               FILE_STORAGE_UPLOAD_MAX_SIZE: &upload-limit "26214400"
               FILE_STORAGE_IMPORT_MAX_SIZE: *upload-limit
               OIDC_SCOPES: "openid profile email"
-              OIDC_AUTH_URI: "https://zitadel.internal.immich.cloud/oauth/v2/authorize"
-              OIDC_TOKEN_URI: "https://zitadel.internal.immich.cloud/oauth/v2/token"
-              OIDC_USERINFO_URI: "https://zitadel.internal.immich.cloud/oidc/v1/userinfo"
+              OIDC_AUTH_URI: "https://auth.internal.futo.org/oauth/v2/authorize"
+              OIDC_TOKEN_URI: "https://auth.internal.futo.org/oauth/v2/token"
+              OIDC_USERINFO_URI: "https://auth.internal.futo.org/oidc/v1/userinfo"
               WEB_CONCURRENCY: 10
               DATABASE_URL:
                 valueFrom:
@@ -62,7 +62,7 @@ spec:
           app:
             image:
               repository: valkey/valkey
-              tag: 9.0.3@sha256:3b55fbaa0cd93cf0d9d961f405e4dfcc70efe325e2d84da207a0a8e6d8fde4f9
+              tag: 9.1.0@sha256:4963247afc4cd33c7d3b2d2816b9f7f8eeebab148d29056c2ca4d7cbc966f2d9
     persistence:
       data:
         enabled: true

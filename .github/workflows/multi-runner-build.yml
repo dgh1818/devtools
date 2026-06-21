@@ -92,12 +92,12 @@ jobs:
         include: ${{ fromJson(needs.matrix.outputs.matrix) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           persist-credentials: false
           token: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
 
-      - uses: immich-app/devtools/actions/image-build@259f3f8e3ca1d04dd6164171126f8bce36c8223a # image-build-action-v0.1.7
+      - uses: immich-app/devtools/actions/image-build@236702d8cb0c9dd1ff155b73f9be789b1b2cd620 # image-build-action-v0.1.10
         with:
           context: ${{ inputs.context }}
           dockerfile: ${{ inputs.dockerfile }}
@@ -114,7 +114,7 @@ jobs:
     if: ${{ !github.event.pull_request.head.repo.fork }}
     steps:
       - name: Install uv
-        uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57 # v8.0.0
+        uses: astral-sh/setup-uv@fac544c07dec837d0ccb6301d7b5580bf5edae39 # v8.2.0
 
       - name: Download digests
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
@@ -126,24 +126,24 @@ jobs:
 
       - name: Login to Docker Hub
         if: ${{ inputs.dockerhub-push }}
-        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Login to GHCR
-        uses: docker/login-action@4907a6ddec9925e35a0a9e82d7399ccc52663121 # v4.1.0
+        uses: docker/login-action@650006c6eb7dba73a995cc03b0b2d7f5ca915bee # v4.2.0
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_APP_TOKEN || github.token }}
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4.0.0
+        uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5 # v4.1.0
 
       - name: Generate docker image tags
         id: meta
-        uses: docker/metadata-action@030e881283bb7a6894de51c315a6bfe6a94e05cf # v6.0.0
+        uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9 # v6.1.0
         env:
           DOCKER_METADATA_PR_HEAD_SHA: 'true'
         with:
@@ -161,10 +161,11 @@ jobs:
             # Tag with long commit sha hash
             type=sha,format=long,prefix=commit-
             # Release version tags
-            type=semver,pattern=v{{version}},enabled=${{ inputs.release-tag-type == 'semver' }}
-            type=semver,pattern=v{{major}},enabled=${{ inputs.release-tag-type == 'semver' }}
-            type=ref,event=tag,enabled=${{ inputs.release-tag-type == 'git-tag' }}
-            type=raw,value=release,enable=${{ github.event_name == 'release' }}
+            type=semver,pattern={{version}},prefix=v,enable=${{ inputs.release-tag-type == 'semver' }}
+            type=semver,pattern={{major}},prefix=v,enable=${{ inputs.release-tag-type == 'semver' }}
+            type=match,pattern=v(\d+),group=1,prefix=v,suffix=-rc,enable=${{ inputs.release-tag-type == 'semver' && github.event.release.prerelease == true }}
+            type=ref,event=tag,enable=${{ inputs.release-tag-type == 'git-tag' }}
+            type=raw,value=release,enable=${{ github.event_name == 'release' && github.event.release.prerelease == false }}
 
       - name: Create manifest list and push
         working-directory: ${{ runner.temp }}/digests

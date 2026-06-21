@@ -1,5 +1,30 @@
 # Changelog
 
+## [2.0.1](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v2.0.0...create-workflow-token-action-v2.0.1) (2026-05-27)
+
+
+### Chores
+
+* **deps:** update actions/create-github-app-token action to v3.2.0 ([#1604](https://github.com/immich-app/devtools/issues/1604)) ([88c149b](https://github.com/immich-app/devtools/commit/88c149b076050dff4dee323e7df927f9d41cad36))
+
+## [2.0.0](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v1.0.3...create-workflow-token-action-v2.0.0) (2026-05-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* client-id input on create-workflow-token action ([#1567](https://github.com/immich-app/devtools/issues/1567))
+
+### Features
+
+* client-id input on create-workflow-token action ([#1567](https://github.com/immich-app/devtools/issues/1567)) ([01f896c](https://github.com/immich-app/devtools/commit/01f896c43507c7d663af28ddcaf09c02a2e9cd7a))
+
+## [1.0.3](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v1.0.2...create-workflow-token-action-v1.0.3) (2026-05-05)
+
+
+### Chores
+
+* **deps:** update github-actions ([#1520](https://github.com/immich-app/devtools/issues/1520)) ([1eb354f](https://github.com/immich-app/devtools/commit/1eb354f462483fdd62189aa90c1a4129aa824666))
+
 ## [1.0.2](https://github.com/immich-app/devtools/compare/create-workflow-token-action-v1.0.1...create-workflow-token-action-v1.0.2) (2026-03-24)
 
 

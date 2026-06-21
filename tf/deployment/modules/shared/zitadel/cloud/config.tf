@@ -7,7 +7,7 @@ terraform {
   required_providers {
     zitadel = {
       source  = "zitadel/zitadel"
-      version = "2.11.0"
+      version = "2.12.8"
     }
     onepassword = {
       source  = "1Password/onepassword"
@@ -16,6 +16,14 @@ terraform {
     http = {
       source  = "hashicorp/http"
       version = "~> 3.5"
+    }
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "5.19.1"
+    }
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 2.3"
     }
   }
 }

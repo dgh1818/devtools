@@ -28,8 +28,9 @@ variable "repositories" {
     },
     {
       name          = "static-pages",
-      description   = "Redirect urls to personal, hosted, instances of Immich.",
-      url           = "https://buy.immich.app",
+      description   = "Sites and packages for Immich",
+      url           = "https://immich.app",
+      license       = "MIT",
       collaborators = true
     },
     {
@@ -68,13 +69,6 @@ variable "repositories" {
       name        = "data.immich.app",
       description = "Graphs and charts for Immich data",
       url         = "https://data.immich.app",
-    },
-    {
-      name          = "ui",
-      description   = "Svelte components for Immich"
-      license       = "MIT"
-      url           = "https://ui.immich.app",
-      collaborators = true
     },
     {
       name        = "native_video_player",
@@ -131,11 +125,6 @@ variable "repositories" {
       collaborators = true
     },
     {
-      name        = "packages",
-      license     = "MIT",
-      description = "A collection of libraries around the Immich project"
-    },
-    {
       name        = "yucca-slop",
       description = "yucca-slop",
       visibility  = "private"
@@ -178,7 +167,6 @@ resource "github_repository" "repositories" {
   delete_branch_on_merge    = true
   has_discussions           = each.value.discussions
   has_issues                = each.value.issues
-  has_downloads             = true
   has_projects              = each.value.projects
   has_wiki                  = false
   visibility                = each.value.visibility
@@ -311,6 +299,33 @@ resource "github_repository_file" "default_files" {
   }
 }
 
+# Community health files (CODE_OF_CONDUCT, SECURITY, FUNDING) only need to live in the
+# org's `.github` repository — GitHub will serve them as defaults to any child repo that
+# does not provide its own copy. See
+# https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file
+resource "github_repository_file" "org_meta_files" {
+  for_each = toset([
+    for file in fileset("${path.module}/org-meta-files", "**") : file
+    if !can(regex(".*terragrunt.*", file))
+  ])
+  repository          = github_repository.repositories[".github"].name
+  file                = each.value
+  content             = file("${path.module}/org-meta-files/${each.value}")
+  commit_message      = "chore: inherit ${each.value} from org-level .github repo"
+  overwrite_on_create = true
+
+  depends_on = [github_repository.repositories]
+
+  lifecycle {
+    ignore_changes = [
+      commit_message,
+      commit_email,
+      commit_author,
+      overwrite_on_create
+    ]
+  }
+}
+
 resource "github_repository_file" "init_files" {
   for_each = {
     for combination in flatten([
@@ -365,16 +380,6 @@ import {
 }
 
 import {
-  id = "packages:renovate.json:"
-  to = github_repository_file.init_files["packages/renovate.json"]
-}
-
-import {
-  id = "geoshenanigans:renovate.json:"
-  to = github_repository_file.init_files["geoshenanigans/renovate.json"]
-}
-
-import {
   id = "data.immich.app:renovate.json:"
   to = github_repository_file.init_files["data.immich.app/renovate.json"]
 }
@@ -382,11 +387,6 @@ import {
 import {
   id = "static-pages:renovate.json:"
   to = github_repository_file.init_files["static-pages/renovate.json"]
-}
-
-import {
-  id = "ui:renovate.json:"
-  to = github_repository_file.init_files["ui/renovate.json"]
 }
 
 import {

@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.1.10](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.9...image-build-action-v0.1.10) (2026-06-01)
+
+
+### Chores
+
+* **deps:** update github-actions ([#1651](https://github.com/immich-app/devtools/issues/1651)) ([52737b8](https://github.com/immich-app/devtools/commit/52737b83975318d57d8849dfef941372113ab08c))
+
+## [0.1.9](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.8...image-build-action-v0.1.9) (2026-06-01)
+
+
+### Chores
+
+* **deps:** update zizmorcore/zizmor-action action to v0.5.6 ([#1632](https://github.com/immich-app/devtools/issues/1632)) ([f313c19](https://github.com/immich-app/devtools/commit/f313c192f9186bcd436667f0c93d67e5c8d1f94c))
+
+## [0.1.8](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.7...image-build-action-v0.1.8) (2026-05-05)
+
+
+### Chores
+
+* **deps:** update github-actions ([#1488](https://github.com/immich-app/devtools/issues/1488)) ([2ee2888](https://github.com/immich-app/devtools/commit/2ee288826ca7aa1ac44809ebabb69a7e32b4c1f9))
+* **deps:** update github-actions ([#1520](https://github.com/immich-app/devtools/issues/1520)) ([1eb354f](https://github.com/immich-app/devtools/commit/1eb354f462483fdd62189aa90c1a4129aa824666))
+
 ## [0.1.7](https://github.com/immich-app/devtools/compare/image-build-action-v0.1.6...image-build-action-v0.1.7) (2026-03-24)
 
 

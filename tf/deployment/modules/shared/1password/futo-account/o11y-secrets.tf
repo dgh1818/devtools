@@ -14,7 +14,9 @@ module "o11y-manual-secrets" {
       "TAILSCALE_API_KEY",
       "TAILSCALE_TAILNET_ID",
       "1PASS_CONNECT_SERVER_CREDENTIALS_FILE",
-      "1PASS_CONNECT_O11Y_SUPERUSER"
+      "1PASS_CONNECT_O11Y_SUPERUSER",
+      "TAILSCALE_OAUTH_CLIENT_ID",
+      "TAILSCALE_OAUTH_CLIENT_SECRET",
     ]
     scoped = [
       "1PASS_CONNECT_O11Y_READ",
@@ -33,10 +35,14 @@ module "o11y-generated-secrets" {
   source = "./shared/modules/secrets/generated"
 
   secrets = {
-    global = [
-      { name = "GRAFANA_ADMIN_PASSWORD" }
+    global = []
+    scoped = [
+      { name = "VICTORIAMETRICS_VMAUTH_PASSWORD" },
+      { name = "GRAFANA_ADMIN_PASSWORD" },
+      { name = "GRAFANA_POSTGRES_PASSWORD" },
+      { name = "GRAFANA_POSTGRES_SUPERUSER_PASSWORD" },
+      { name = "GRAFANA_SECRET_KEY" },
     ]
-    scoped = []
   }
 
   global_vault = "o11y_tf"

@@ -12,9 +12,18 @@ module "yucca-manual-secrets" {
       "OVH_APPLICATION_SECRET",
       "OVH_CONSUMER_KEY",
       "TAILSCALE_API_KEY",
-      "TAILSCALE_TAILNET_ID"
+      "TAILSCALE_TAILNET_ID",
+      "CLOUDFLARE_ACCOUNT_ID",
+      "CLOUDFLARE_API_TOKEN",
     ]
-    scoped = []
+    scoped = [
+      "CUSTOMER_ZITADEL_DOMAIN",
+      "CUSTOMER_ZITADEL_PROFILE_JSON",
+      "CUSTOMER_ZITADEL_SMTP_HOST",
+      "CUSTOMER_ZITADEL_SMTP_USER",
+      "CUSTOMER_ZITADEL_SMTP_PASSWORD",
+      "CUSTOMER_ZITADEL_SMTP_SENDER_ADDRESS",
+    ]
   }
   global_vault      = "yucca_tf_manual"
   copy_global_vault = "yucca_tf"

@@ -1,5 +1,60 @@
 # Changelog
 
+## [3.1.0](https://github.com/immich-app/devtools/compare/use-mise-action-v3.0.0...use-mise-action-v3.1.0) (2026-06-16)
+
+
+### Features
+
+* bump use-mise version to 2026.6.10 ([#1691](https://github.com/immich-app/devtools/issues/1691)) ([e908c3d](https://github.com/immich-app/devtools/commit/e908c3dfe4ffb0b16f183d31a23a3a98eddb0eb6))
+
+
+### Chores
+
+* **deps:** update github-actions ([#1668](https://github.com/immich-app/devtools/issues/1668)) ([ddbf697](https://github.com/immich-app/devtools/commit/ddbf697f019c93b07eb6c96e642ae81aa4c12bf5))
+
+## [3.0.0](https://github.com/immich-app/devtools/compare/use-mise-action-v2.0.2...use-mise-action-v3.0.0) (2026-06-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* enforce locked in use-mise action ([#1615](https://github.com/immich-app/devtools/issues/1615))
+
+### Features
+
+* enforce locked in use-mise action ([#1615](https://github.com/immich-app/devtools/issues/1615)) ([b69f10c](https://github.com/immich-app/devtools/commit/b69f10ca5dec2d60583f6e49bd014d501c274e05))
+
+## [2.0.2](https://github.com/immich-app/devtools/compare/use-mise-action-v2.0.1...use-mise-action-v2.0.2) (2026-05-19)
+
+
+### Chores
+
+* bump use-mise version to 2026.5.12 ([#1614](https://github.com/immich-app/devtools/issues/1614)) ([72b432a](https://github.com/immich-app/devtools/commit/72b432a9c7460a3ab88929c3495bd0f17cc23406))
+
+## [2.0.1](https://github.com/immich-app/devtools/compare/use-mise-action-v2.0.0...use-mise-action-v2.0.1) (2026-05-09)
+
+
+### Bug Fixes
+
+* mise windows ([#1580](https://github.com/immich-app/devtools/issues/1580)) ([801c2de](https://github.com/immich-app/devtools/commit/801c2def53de0342a57ddedc9575226fcdba58a8))
+
+## [2.0.0](https://github.com/immich-app/devtools/compare/use-mise-action-v1.2.0...use-mise-action-v2.0.0) (2026-05-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* properly pass github_token in use-mise ([#1568](https://github.com/immich-app/devtools/issues/1568))
+
+### Bug Fixes
+
+* properly pass github_token in use-mise ([#1568](https://github.com/immich-app/devtools/issues/1568)) ([fc38a2f](https://github.com/immich-app/devtools/commit/fc38a2f8d54849944c43f3f07db89d8f96a22855))
+
+## [1.2.0](https://github.com/immich-app/devtools/compare/use-mise-action-v1.1.3...use-mise-action-v1.2.0) (2026-05-06)
+
+
+### Features
+
+* expose working_directory to mise-action ([#1565](https://github.com/immich-app/devtools/issues/1565)) ([8d016aa](https://github.com/immich-app/devtools/commit/8d016aa8c3e11df563f343b788dc37870fa703b5))
+
 ## [1.1.3](https://github.com/immich-app/devtools/compare/use-mise-action-v1.1.2...use-mise-action-v1.1.3) (2026-03-24)
 
 

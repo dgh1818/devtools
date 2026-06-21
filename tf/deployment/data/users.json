@@ -4,13 +4,19 @@
       "username": "alextran1502",
       "id": 27055614
     },
+    "gitlab": {
+      "username": "altran",
+      "id": 79
+    },
     "discord": {
       "username": "alex.tran1502",
       "id": 285511635735543828
     },
     "roles": [
-      "admin",
-      "immich"
+      "immich_admin",
+      "futo_admin",
+      "immich",
+      "futo"
     ]
   },
   {
@@ -18,52 +24,69 @@
       "username": "jrasm91",
       "id": 4334196
     },
+    "gitlab": {
+      "username": "jrasm91",
+      "id": 81
+    },
     "discord": {
       "username": "jrasm91",
       "id": 613523742479483183
     },
     "roles": [
-      "admin",
-      "immich"
-    ],
-    "dev": true
+      "immich_admin",
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
       "username": "bo0tzz",
       "id": 11602424
     },
+    "gitlab": {
+      "username": "boet",
+      "id": 95
+    },
     "discord": {
       "username": "bo0tzz",
       "id": 324007594262003722
     },
     "roles": [
-      "admin",
+      "immich_admin",
       "yucca",
-      "immich"
-    ],
-    "dev": true
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
       "username": "zackpollard",
       "id": 1313578
     },
+    "gitlab": {
+      "username": "zack",
+      "id": 80
+    },
     "discord": {
       "username": "zackpollard",
       "id": 185097470215192579
     },
     "roles": [
-      "admin",
+      "immich_admin",
+      "futo_admin",
       "yucca",
-      "immich"
-    ],
-    "dev": true
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
       "username": "onedr0p",
       "id": 213795
+    },
+    "gitlab": {
+      "username": "devin",
+      "id": 157
     },
     "discord": {
       "username": "onedr0p",
@@ -71,7 +94,8 @@
     },
     "roles": [
       "team",
-      "yucca"
+      "yucca",
+      "futo"
     ]
   },
   {
@@ -79,13 +103,18 @@
       "username": "nutgood",
       "id": 38678863
     },
+    "gitlab": {
+      "username": "antoine",
+      "id": 158
+    },
     "discord": {
       "username": "nutgood",
       "id": 129782158972813312
     },
     "roles": [
       "team",
-      "yucca"
+      "yucca",
+      "futo"
     ]
   },
   {
@@ -93,13 +122,18 @@
       "username": "nirokato",
       "id": 3781232
     },
+    "gitlab": {
+      "username": "andy",
+      "id": 156
+    },
     "discord": {
       "username": "nirokato",
       "id": 269581865881436170
     },
     "roles": [
       "team",
-      "yucca"
+      "yucca",
+      "futo"
     ]
   },
   {
@@ -107,15 +141,19 @@
       "username": "danieldietzler",
       "id": 36593685
     },
+    "gitlab": {
+      "username": "danield",
+      "id": 108
+    },
     "discord": {
       "username": "ddietzler",
       "id": 273458650557841408
     },
     "roles": [
       "team",
-      "immich"
-    ],
-    "dev": true
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
@@ -128,7 +166,8 @@
     },
     "roles": [
       "team",
-      "immich"
+      "immich",
+      "futo"
     ]
   },
   {
@@ -142,14 +181,18 @@
     },
     "roles": [
       "team",
-      "immich"
-    ],
-    "dev": true
+      "immich",
+      "futo"
+    ]
   },
   {
     "github": {
       "username": "bwees",
       "id": 12686250
+    },
+    "gitlab": {
+      "username": "bwees",
+      "id": 129
     },
     "discord": {
       "username": "bwees",
@@ -157,7 +200,8 @@
     },
     "roles": [
       "team",
-      "immich"
+      "immich",
+      "futo"
     ]
   },
   {
@@ -171,7 +215,8 @@
     },
     "roles": [
       "team",
-      "immich"
+      "immich",
+      "futo"
     ]
   },
   {
@@ -179,13 +224,67 @@
       "username": "insertish",
       "id": 38285861
     },
+    "gitlab": {
+      "username": "paulm",
+      "id": 150
+    },
     "discord": {
       "username": "insert",
       "id": 99765584266264576
     },
     "roles": [
       "team",
-      "yucca"
+      "yucca",
+      "futo"
+    ]
+  },
+  {
+    "github": {
+      "username": "benbeckford",
+      "id": 186883809
+    },
+    "gitlab": {
+      "username": "ben",
+      "id": 163
+    },
+    "discord": {
+      "username": "benbeckford",
+      "id": 1302776481067569286
+    },
+    "roles": [
+      "team",
+      "immich",
+      "futo"
+    ]
+  },
+  {
+    "github": {
+      "username": "staticdog",
+      "id": 90420132
+    },
+    "discord": {
+      "username": "beakdog",
+      "id": 313724669989617674
+    },
+    "roles": [
+      "team",
+      "immich",
+      "futo"
+    ]
+  },
+  {
+    "github": {
+      "username": "agg23",
+      "id": 238679
+    },
+    "discord": {
+      "username": "agg23",
+      "id": 160419937825980416
+    },
+    "roles": [
+      "team",
+      "immich",
+      "futo"
     ]
   },
   {
@@ -207,12 +306,17 @@
       "username": "kennyfuto",
       "id": 202023786
     },
+    "gitlab": {
+      "username": "kenny",
+      "id": 115
+    },
     "discord": {
       "username": "kennyfuto",
       "id": 1402320140938510398
     },
     "roles": [
-      "futo"
+      "futo",
+      "futo_admin"
     ]
   },
   {
@@ -220,9 +324,54 @@
       "username": "koen-futo",
       "id": 129423944
     },
+    "gitlab": {
+      "username": "koen",
+      "id": 40
+    },
     "discord": {
       "username": "",
       "id": 0
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
+    "discord": {
+      "username": "thekinocorner",
+      "id": 407763616528334848
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": {
+      "username": "orhan98",
+      "id": 234065310
+    },
+    "gitlab": {
+      "username": "orhan",
+      "id": 149
+    },
+    "discord": {
+      "username": "orhan_08299",
+      "id": 1450543861108838491
+    },
+    "roles": [
+      "futo"
+    ]
+  },
+  {
+    "github": null,
+    "gitlab": {
+      "username": "justin",
+      "id": 105
+    },
+    "discord": {
+      "username": "somewhatjustin",
+      "id": 396114422906486784
     },
     "roles": [
       "futo"

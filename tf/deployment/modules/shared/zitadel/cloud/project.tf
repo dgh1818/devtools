@@ -6,51 +6,61 @@ locals {
     grantTypes   = ["AUTHORIZATION_CODE"]
     protocol     = "oidc"
     metadataUrl  = ""
+    # When true, a user is granted every role they match (not just the
+    # highest-priority one) — e.g. Outline admins land in Leadership and Team.
+    multi_role = false
   }
   projects_data = [
     {
       name         = "Grafana Monitoring Prod"
-      roles        = [{ key = "GrafanaAdmin", grants_to = ["admin"] }, { key = "Editor", grants_to = ["team"] }]
+      roles        = [{ key = "GrafanaAdmin", grants_to = ["immich_admin"] }, { key = "Editor", grants_to = ["team"] }]
       redirectUris = ["https://monitoring.immich.cloud/login/generic_oauth"]
     },
     {
       name         = "Grafana Monitoring Dev"
-      roles        = [{ key = "GrafanaAdmin", grants_to = ["admin"] }, { key = "Editor", grants_to = ["team"] }]
+      roles        = [{ key = "GrafanaAdmin", grants_to = ["immich_admin"] }, { key = "Editor", grants_to = ["team"] }]
       redirectUris = ["https://monitoring.dev.immich.cloud/login/generic_oauth"]
     },
     {
       name         = "Grafana Data Prod"
-      roles        = [{ key = "GrafanaAdmin", grants_to = ["admin"] }, { key = "Editor", grants_to = ["team"] }]
+      roles        = [{ key = "GrafanaAdmin", grants_to = ["immich_admin"] }, { key = "Editor", grants_to = ["team"] }]
       redirectUris = ["https://grafana.data.immich.cloud/login/generic_oauth"]
     },
     {
       name = "Outline"
       roles = [
-        { key = "Leadership", grants_to = ["admin"] },
-        { key = "Team", grants_to = ["team"] },
+        { key = "Leadership", grants_to = ["immich_admin"] },
+        { key = "Team", grants_to = ["team", "immich_admin"] },
         { key = "Contributor", grants_to = ["contributor"] },
         { key = "Support Crew", grants_to = ["support"] }
       ]
+      multi_role   = true
       authMethod   = "BASIC"
       redirectUris = ["https://outline.immich.cloud/auth/oidc.callback"]
     },
     {
       name = "ContainerSSH"
       roles = [
-        { key = "Granted", grants_to = ["admin", "team", "contributor"] }
+        { key = "Granted", grants_to = ["immich_admin", "team", "contributor"] }
       ]
       appType    = "NATIVE"
       grantTypes = ["DEVICE_CODE"]
     },
     {
       name         = "OAuth2 Proxy"
-      roles        = [{ key = "Granted", grants_to = ["admin", "team"] }]
+      roles        = [{ key = "Granted", grants_to = ["immich_admin", "team"] }]
       redirectUris = ["https://oauth2-proxy.internal.immich.cloud/oauth2/callback"]
+    },
+    {
+      name         = "LoopDedupe"
+      roles        = [{ key = "Granted", grants_to = ["immich_admin", "team", "contributor", "support"] }]
+      authMethod   = "BASIC"
+      redirectUris = ["https://loopdedupe.internal.immich.cloud/oauth2/callback"]
     },
     {
       name        = "OVHCloud"
       protocol    = "saml"
-      roles       = [{ key = "ADMIN", grants_to = ["admin", "yucca"] }, { key = "DEFAULT", grants_to = ["team"] }]
+      roles       = [{ key = "ADMIN", grants_to = ["immich_admin", "yucca"] }, { key = "DEFAULT", grants_to = ["team"] }]
       metadataUrl = "https://auth.eu.ovhcloud.com/sso/saml/sp/metadata.xml"
     }
   ]
