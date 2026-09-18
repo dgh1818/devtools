@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Check what should run
         id: check
-        uses: immich-app/devtools/actions/pre-job@91f342bb4477c4bc10c576ae739da875d85aa164 # pre-job-action-v2.0.4
+        uses: immich-app/devtools/actions/pre-job@75493d49052d536863fc96100086782c5279b145 # pre-job-action-v2.1.1
         with:
           github-token: ${{ github.token }}
           filters: |
@@ -27,6 +27,9 @@ jobs:
               - 'actions/sticky-comment/**'
           force-filters: |
             - '.github/workflows/test-sticky-comment.yml'
+            - 'package.json'
+            - 'pnpm-workspace.yaml'
+            - 'pnpm-lock.yaml'
 
   build-check:
     name: Verify dist is up to date
@@ -35,29 +38,25 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    defaults:
-      run:
-        working-directory: ./actions/sticky-comment
     steps:
       - name: Checkout code
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 
-      - name: Setup Node
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+      - name: Setup Mise
+        uses: immich-app/devtools/actions/use-mise@06a9ef925332c91be647d6256642b86b398592c8 # use-mise-action-v3.2.1
         with:
-          node-version-file: './actions/sticky-comment/.nvmrc'
+          github_token: ${{ github.token }}
 
-      - run: npm ci
-      - run: npm run check
-      - run: npm run build
+      - run: pnpm --filter @immich/sticky-comment-action install --frozen-lockfile
+      - run: pnpm --filter @immich/sticky-comment-action check
+      - run: pnpm --filter @immich/sticky-comment-action build
 
       - name: Verify dist/ matches source
-        working-directory: .
         run: |
           if ! git diff --exit-code actions/sticky-comment/dist; then
-            echo "::error::dist/ is out of date. Run 'npm run build' in actions/sticky-comment and commit the result."
+            echo "::error::dist/ is out of date. Run 'pnpm --filter @immich/sticky-comment-action build' and commit the result."
             exit 1
           fi
 
@@ -71,7 +70,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
 

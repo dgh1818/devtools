@@ -1,8 +1,11 @@
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
+kind: OCIRepository
 metadata:
   name: immich-charts
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://immich-app.github.io/immich-charts
+  url: oci://ghcr.io/immich-app/immich-charts/immich
+  ref:
+    tag: "0.13.2"
+    digest: sha256:bfdfdcc45864cb7fd0c41368b26e0127470c10ea41d981756210899c225266a6

@@ -31,6 +31,10 @@ inputs:
     description: 'Custom boolean condition to force all jobs to run'
     required: false
     default: 'false'
+  persist-credentials:
+    description: 'Persist git credentials after checkout. Needed on private repos for path filtering on push; leaves the token in .git/config'
+    required: false
+    default: 'false'
 
 outputs:
   should_run:
@@ -190,9 +194,9 @@ runs:
 
     - name: Checkout code
       if: ${{ steps.check-conditions.outputs.needs_path_filtering == 'true' }}
-      uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
-        persist-credentials: false
+        persist-credentials: ${{ inputs.persist-credentials }}
         token: ${{ inputs.github-token }}
 
     - name: Check force paths
@@ -241,17 +245,19 @@ runs:
     - name: Run force paths filter
       if: ${{ steps.check-conditions.outputs.needs_path_filtering == 'true' && inputs.force-filters != '' }}
       id: force_paths_filter
-      uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+      uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
       with:
         filters: ${{ steps.force_paths.outputs.force-paths-yaml }}
+        base: ${{ github.event_name == 'push' && github.ref_name || '' }}
         token: ${{ inputs.github-token }}
 
     - name: Check main paths
       if: ${{ steps.check-conditions.outputs.needs_path_filtering == 'true' && (inputs.force-filters == '' || steps.force_paths_filter.outputs.force-paths != 'true') }}
       id: main_paths
-      uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
+      uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
       with:
         filters: ${{ inputs.filters }}
+        base: ${{ github.event_name == 'push' && github.ref_name || '' }}
         token: ${{ inputs.github-token }}
 
     - name: Generate final outputs
